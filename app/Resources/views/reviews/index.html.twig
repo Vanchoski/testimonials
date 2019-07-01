@@ -1,0 +1,157 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <h1>All-In-One Testimonials Page</h1>
+        <p> Create a new layout for your reviews feed that will create an entire Testimonials page for your website with
+            the following features: Rating badge, Reviews Search Bar, List of Reviews from various sources, Leave a
+            Review Button, Star Rating Filter.</p>
+        {% set totalRecordsDivision = statistics['total_records'] == 0 ? 1 : statistics['total_records'] %}
+        <div class="stats-reviews">
+            <div class="title">
+                <h3>Reviews page demo</h3>
+                <div class="rateit" data-rateit-value="{{ statistics['total_rating']/totalRecordsDivision }}"
+                     data-rateit-ispreset="true" data-rateit-readonly="true" step="0.5"></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="average">
+                        <h4> {{ statistics['total_rating']/ totalRecordsDivision}} </h4>
+                        <h3> Rating of {{ statistics['total_records']}} reviews</h3>
+                    </div>
+                </div>
+                <div class="col-xs-5">
+                    <div class="stars-checkbox">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input raiting-check" id="five_star"
+                                   data-star="5">
+                            <div class="rateit" data-rateit-value="5" data-rateit-ispreset="true"
+                                 data-rateit-readonly="true"></div>
+                            <span class="text-muted rating-count"> {{ statistics['stats'][5]['total'] ?? 0}} </span>
+                            <div class="progress progress-bar-container">
+                                <div class="progress-bar" role="progressbar"
+                                     aria-valuenow="{{ statistics['stats'][5]['total'] ?? 0}}"
+                                     aria-valuemin="0" aria-valuemax="{{ statistics['total_records']}}"
+                                     style="width:{{ ( statistics['stats'][5]['total'] ?? 0) / totalRecordsDivision * 100 }}%">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input raiting-check" id="four_star"
+                                   data-star="4">
+                            <div class="rateit" data-rateit-value="4" data-rateit-ispreset="true"
+                                 data-rateit-readonly="true"></div>
+                            <span class="text-muted rating-count"> {{ statistics['stats'][4]['total'] ?? 0}} </span>
+                            <div class="progress progress-bar-container">
+                                <div class="progress-bar" role="progressbar"
+                                     aria-valuenow="{{ statistics['stats'][4]['total'] ?? 0}}"
+                                     aria-valuemin="0" aria-valuemax="{{ statistics['total_records']}}"
+                                     style="width:{{ (  statistics['stats'][4]['total'] ?? 0 ) / totalRecordsDivision * 100 }}%">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input raiting-check" id="three_star"
+                                   data-star="3">
+                            <div class="rateit" data-rateit-value="3" data-rateit-ispreset="true"
+                                 data-rateit-readonly="true"></div>
+                            <span class="text-muted rating-count"> {{ statistics['stats'][3]['total'] ?? 0}} </span>
+                            <div class="progress progress-bar-container">
+                                <div class="progress-bar" role="progressbar"
+                                     aria-valuenow="{{ statistics['stats'][3]['total'] ?? 0}}"
+                                     aria-valuemin="0" aria-valuemax="{{ statistics['total_records']}}"
+                                     style="width:{{ (  statistics['stats'][3]['total'] ?? 0 ) / totalRecordsDivision * 100 }}%">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input raiting-check" id="two_star"
+                                   data-star="2">
+                            <div class="rateit" data-rateit-value="2" data-rateit-ispreset="true"
+                                 data-rateit-readonly="true"></div>
+                            <span class="text-muted rating-count"> {{ statistics['stats'][2]['total'] ?? 0}} </span>
+                            <div class="progress progress-bar-container">
+                                <div class="progress-bar" role="progressbar"
+                                     aria-valuenow="{{ statistics['stats'][2]['total'] ?? 0}}"
+                                     aria-valuemin="0" aria-valuemax="{{ statistics['total_records']}}"
+                                     style="width:{{ ( statistics['stats'][2]['total'] ?? 0 ) / totalRecordsDivision * 100 }}%">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input raiting-check" id="one_star"
+                                   data-star="1">
+                            <div class="rateit" data-rateit-value="1" data-rateit-ispreset="true"
+                                 data-rateit-readonly="true"></div>
+                            <span class="text-muted rating-count"> {{ statistics['stats'][1]['total'] ?? 0}} </span>
+                            <div class="progress progress-bar-container">
+                                <div class="progress-bar" role="progressbar"
+                                     aria-valuenow="{{ statistics['stats'][1]['total'] ?? 0}}"
+                                     aria-valuemin="0" aria-valuemax="{{ statistics['total_records']}}"
+                                     style="width:{{ ( statistics['stats'][1]['total'] ?? 0 ) / totalRecordsDivision * 100 }}%">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-xs-4">
+                    <div id="progressbar"></div>
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#leaveReview">
+                        Leave a review
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="leaveReview" tabindex="-1" role="dialog" aria-labelledby="leaveReviewTitle"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="leaveReviewTitle">Leave a review</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form id="leave_review" method="post">
+                            <div id="star-rating" class="rateit" data-rateit-step="1" data-rateit-resetable="false">
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="col-form-label">Email:</label>
+                                <input type="text" class="form-control" id="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="name" class="col-form-label">Name:</label>
+                                <input type="text" class="form-control" id="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message" class="col-form-label">Message:</label>
+                                <textarea class="form-control" id="message" required></textarea>
+                            </div>
+                            <div id="error-msg" class="alert alert-danger">
+                                <p> All fields are required </p>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" id="submit_review" class="btn btn-primary">Submit Review</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="input-group">
+            <input class="form-control" id="filter-reviews" name="filter-reviews" placeholder="Search reviews"
+                   type="text">
+            <span class="input-group-btn">
+                <button class="btn btn-default search-icon-btn" id="search_button" type="button"></button>
+            </span>
+        </div>
+        <div class="review-container">
+        </div>
+        <div id="pagination-container">
+        </div>
+    </div>
+{% endblock %}
