@@ -15,21 +15,28 @@ class ReviewsController extends Controller
     /**
      * @Route("/index")
      */
-    public function index()
+    public function index(Request $request)
     {
         $repository = $this->getDoctrine()->getRepository(Review::class);
         $statistics = $repository->statistics();
 //        dump($statistics);
 //        die();
-        return $this->render('reviews/index.html.twig',['statistics'=>$statistics]);
-    }
-
-    public function newForm(Request $request)
-    {
         $review = new Review();
         $form = $this->createForm(ReviewType::class,$review);
 
         $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $review = $form->getData();
+
+            return $this->redirectToRoute('');
+        }
+
+//        dump($form->createView());
+//        die;
+
+        return $this->render('reviews/index.html.twig',['statistics'=>$statistics,'form'=> $form->createView()]);
     }
 }

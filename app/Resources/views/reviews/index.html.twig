@@ -134,6 +134,15 @@
                                 <p> All fields are required </p>
                             </div>
                         </form>
+
+                        {{ form_start(form, {'attr': {'id': 'leave_review', 'method': 'post'}}) }}
+                        {{ form_widget(form. fullName, { 'id': 'name' })}}
+                        {{ form_widget(form. email, { 'id': 'email' })}}
+                        {{ form_widget(form. message, { 'id': 'message' })}}
+                        {{ form_widget(form. rating, { 'id': 'rating' })}}
+                        {{ form_widget(form. save, { 'id': 'submit_review' })}}
+                        {{ form_end(form) }}
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

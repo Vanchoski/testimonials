@@ -18,17 +18,17 @@ class ReviewType extends AbstractType
 
         // Id can be add like : {{ form_start(form, {'attr': {'id': 'form-id', 'name': 'form-name'}}) }}
         $builder
-            ->add('email', EmailType::class,[
-                'label' =>['label.email']
+            ->add('fullName', TextType::class,[
+                'label' =>'label.name'
             ])
-            ->add('name', TextType::class,[
-                'label' =>['label.name']
+            ->add('email', EmailType::class,[
+                'label' => 'label.email'
             ])
             ->add('message', TextType::class,[
-            'label' => ['label.message']
+                 'label' => 'label.message'
             ])
             ->add('rating',IntegerType::class,
-                ['label' => ['label.rating']])
+                ['label' => 'label.rating'])
             ->add('save', SubmitType::class, ['label' => 'Submit Review']);
     }
 
