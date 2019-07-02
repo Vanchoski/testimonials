@@ -15,8 +15,8 @@
             <div class="row">
                 <div class="col-xs-3">
                     <div class="average">
-                        <h4> {{ statistics['total_rating']/ totalRecordsDivision}} </h4>
-                        <h3> Rating of {{ statistics['total_records']}} reviews</h3>
+                        <h4> {{ (statistics['total_rating']/totalRecordsDivision)|round(2,'floor')}} </h4>
+                        <h3> Rating of {{ statistics['total_records'] }} reviews</h3>
                     </div>
                 </div>
                 <div class="col-xs-5">
