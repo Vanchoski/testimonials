@@ -16,7 +16,6 @@ class ReviewRepository extends EntityRepository
 
     public function findReview($q, $ratings = [],$page = 1, $perPage = self::PER_PAGE_LIMIT)
     {
-
 //        $repository = $this->getEntityManager()->getRepository(Review::class);
         $query = $this->createQueryBuilder('r')
             ->where('r.message LIKE :q')
