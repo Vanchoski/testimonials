@@ -5,7 +5,9 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Review;
+use AppBundle\Form\ReviewType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ReviewsController extends Controller
@@ -20,5 +22,14 @@ class ReviewsController extends Controller
 //        dump($statistics);
 //        die();
         return $this->render('reviews/index.html.twig',['statistics'=>$statistics]);
+    }
+
+    public function newForm(Request $request)
+    {
+        $review = new Review();
+        $form = $this->createForm(ReviewType::class,$review);
+
+        $form->handleRequest($request);
+
     }
 }
